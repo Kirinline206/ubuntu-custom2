@@ -1,0 +1,23 @@
+pool:
+  vmImage: 'ubuntu-18.04'
+pr: none
+trigger:
+  branches:
+    include: [ master ]
+  paths:
+    exclude:
+      - readme.md
+steps:
+  - script: |
+      sudo apt update
+      sudo apt install -y \
+      debootstrap mtools \
+      squashfs-tools xorriso
+    displayName: Instalação de dependências
+  - script: bash build.sh
+    displayName: Compilação da imagem de instalação
+  - task: PublishBuildArtifacts@1
+    displayName: Upload da imagem de instalação para o Artifacts
+    inputs:
+      pathtoPublish: /home/vsts/ubuntu-custom/iso/
+      artifactName: 'Ubuntu Custom ISO'
