@@ -8,7 +8,7 @@ sudo debootstrap \
     --arch=amd64 \
     --variant=minbase \
     --components=main,multiverse,universe \
-    eoan \
+    focal \
     $HOME/ubuntu-custom/chroot
 #    --include=fish \
 
@@ -22,9 +22,11 @@ echo "ubuntu-custom" | sudo tee $HOME/ubuntu-custom/chroot/etc/hostname
 
 # Adição dos repositórios principais do Ubuntu
 cat <<EOF | sudo tee $HOME/ubuntu-custom/chroot/etc/apt/sources.list
-deb http://us.archive.ubuntu.com/ubuntu/ eoan main restricted universe multiverse
-deb http://us.archive.ubuntu.com/ubuntu/ eoan-security main restricted universe multiverse
-deb http://us.archive.ubuntu.com/ubuntu/ eoan-updates main restricted universe multiverse
+deb http://us.archive.ubuntu.com/ubuntu/  focal main restricted
+deb http://security.ubuntu.com/ubuntu focal-security multiverse
+deb http://security.ubuntu.com/ubuntu focal-security main restricted
+deb http://security.ubuntu.com/ubuntu focal-security universe
+deb http://br.archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse
 EOF
 
 # Repositórios adicionais
@@ -32,6 +34,11 @@ EOF
 #sudo chroot $HOME/ubuntu-custom/chroot apt install -y software-properties-common
 sudo chroot $HOME/ubuntu-custom/chroot apt install snapd 
 sudo chroot $HOME/ubuntu-custom/chroot snap install onlyoffice-desktopeditors
+sudo chroot $HOME/ubuntu-custom/chroot sudo snap install chromium
+sudo chroot $HOME/ubuntu-custom/chroot sudo snap install spotify
+sudo chroot $HOME/ubuntu-custom/chroot sudo snap install mailspring
+sudo chroot $HOME/ubuntu-custom/chroot sudo snap install instagraph
+sudo chroot $HOME/ubuntu-custom/chroot sudo snap install kdenlive
 # PPA 1
 sudo chroot $HOME/ubuntu-custom/chroot add-apt-repository -y ppa:linuxuprising/java
 # PPA 2
